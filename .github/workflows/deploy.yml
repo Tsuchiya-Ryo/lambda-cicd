@@ -39,5 +39,5 @@ jobs:
       
       - name: Update lambda function
         run: |
-          DIGEST=`aws ecr describe-images --repository-name ${{ secrets.ECR_REPOSITORY }} --image-ids imageTag=latest | jq '.imageDetails[0].imageDigest'`
+          DIGEST=`aws ecr describe-images --repository-name ${{ secrets.ECR_REPOSITORY }} --image-ids imageTag=latest | jq -r '.imageDetails[0].imageDigest'`
           aws lambda update-function-code --function-name ${{ secrets.FUNCTION_NAME }} --image-uri ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPOSITORY }}@$DIGEST
