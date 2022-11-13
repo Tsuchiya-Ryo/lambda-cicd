@@ -1,4 +1,4 @@
-name: Deploy ECR
+name: Deploy ECR & Update Lambda Function
 
 on:
   workflow_dispatch:

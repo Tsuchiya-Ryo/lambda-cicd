@@ -1,6 +1,5 @@
 {
-  "key": "sample_inputs/data1.csv",
-  "from": "2022-01-01",
-  "to": "2022-01-31"
+  "Key": "sample_inputs/sample.csv",
+  "Method": "max"
 }
   
