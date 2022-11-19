@@ -1,6 +1,8 @@
 import json
-from constants import BUCKET_NAME
+from dotenv import load_dotenv
 from repository import Repository
+
+load_dotenv("env/.env")
 
 def lambda_handler(event, context):
     repo = Repository(BUCKET_NAME)
@@ -10,7 +12,7 @@ def lambda_handler(event, context):
     elif event["Method"] == "min":
         idx = df["number"].idxmin()
     else:
-        return {"statusCode": 400, "body": "invalid method param"}
+        return {"statusCode": 400, "body": "invalid method"}
 
     body = {}
     for col in df.columns:

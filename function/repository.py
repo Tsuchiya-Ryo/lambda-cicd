@@ -1,7 +1,7 @@
 import boto3
 import pandas as pd
 from io import StringIO
-from constants import *
+from constants import ENCODING, DELIMITER
 
 class Repository(object):
     def __init__(self, bucket_name: str):
@@ -11,6 +11,3 @@ class Repository(object):
     def get_dataframe(self, key: str) -> pd.DataFrame:
         body = self.client.get_object(Bucket=self.bucket_name, Key=key)["Body"].read()
         return pd.read_csv(StringIO(body.decode(ENCODING)), delimiter=DELIMITER)
-
-# if __name__ == "__main__":
-#     S3Repository().get_object("lambda-cicd-bucket-tr", "sample_inputs/sample.csv")
