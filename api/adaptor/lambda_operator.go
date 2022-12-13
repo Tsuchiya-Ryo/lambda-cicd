@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"lambda-cicd/api/model"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/model"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"

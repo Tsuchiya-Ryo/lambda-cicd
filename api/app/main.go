@@ -1,10 +1,11 @@
 package main
 
 import (
-	"lambda-cicd/api/adaptor"
-	"lambda-cicd/api/router"
 	"log"
 	"os"
+
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/adaptor"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -28,10 +29,10 @@ func load_config() error {
 	env := os.Getenv("ENV")
 	switch env {
 	case "prd":
-		return godotenv.Load("api/env/prd.env")
+		return godotenv.Load("env/prd.env")
 	case "stg":
-		return godotenv.Load("api/env/stg.env")
+		return godotenv.Load("env/stg.env")
 	default:
-		return godotenv.Load("api/env/.env")
+		return godotenv.Load("env/.env")
 	}
 }
