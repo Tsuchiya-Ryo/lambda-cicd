@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"os"
 
-	"lambda-cicd/api/adaptor"
-	"lambda-cicd/api/logic"
-	"lambda-cicd/api/model"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/adaptor"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/logic"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/model"
 
 	"github.com/gin-gonic/gin"
 )

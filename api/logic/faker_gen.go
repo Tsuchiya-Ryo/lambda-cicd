@@ -7,7 +7,7 @@ import (
 	"io"
 	"time"
 
-	"lambda-cicd/api/model"
+	"github.com/Tsuchiya-Ryo/lambda-cicd/api/model"
 
 	"github.com/go-faker/faker/v4"
 	"github.com/jszwec/csvutil"

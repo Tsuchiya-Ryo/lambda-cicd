@@ -1,23 +1,19 @@
 FROM golang:1.19-alpine as builder
 
-RUN mkdir -p /lambda-cicd/api
-COPY ["./go.mod", "./go.sum", "/lambda-cicd/"]
-COPY "./api" "/lambda-cicd/api/"
-
-WORKDIR /lambda-cicd
+COPY . /api
+WORKDIR /api
 
 RUN go mod tidy && \
-    go build api/app/main.go
+    GOOS=linux GOARCH=amd64 go build -o engine app/main.go
 
 FROM alpine:latest
 
 ARG ENV
 ENV ENV=$ENV
-RUN mkdir -p /lambda-cicd/api/env
 
-COPY --from=builder /lambda-cicd/main /lambda-cicd
-COPY --from=builder /lambda-cicd/api/env/ /lambda-cicd/api/env/
+COPY ./env /api/env
+WORKDIR /api
 
-WORKDIR /lambda-cicd
+COPY --from=builder /api/engine .
 
 CMD ["./main"]
