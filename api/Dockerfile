@@ -16,4 +16,4 @@ WORKDIR /api
 
 COPY --from=builder /api/engine .
 
-CMD ["./main"]
+CMD ["./engine"]
