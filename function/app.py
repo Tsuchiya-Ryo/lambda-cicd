@@ -1,22 +1,18 @@
+import os
 import json
 from dotenv import load_dotenv
 from repository import Repository
+from logic import Logic
 
 load_dotenv("env/.env")
 
 def lambda_handler(event, context):
-    repo = Repository(BUCKET_NAME)
+    repo = Repository(os.environ.get("BUCKET_NAME"))
     df = repo.get_dataframe(event["Key"])
-    if event["Method"] == "max":
-        idx = df["number"].idxmax()
-    elif event["Method"] == "min":
-        idx = df["number"].idxmin()
-    else:
-        return {"statusCode": 400, "body": "invalid method"}
-
-    body = {}
-    for col in df.columns:
-        body[col] = str(df.loc[idx, col])
+    idx = Logic.extract_target_index(df, event["Method"])
+    if idx == None:
+        return {"statusCode": 400, "body": "invalid method"}    
+    body = Logic.get_record_body(df, idx)
 
     return {
         "statusCode": 200,
