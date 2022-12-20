@@ -12,10 +12,21 @@ class TestLogic(TestCase):
             "number": [60.0, 70.0, 80.0, 90.0, 100.0]
         })
 
-    def test_extract_target_index(self):
+    def test_extract_target_index_valid(self):
         res = Logic.extract_target_index(self.df, "max")
         assert res == 4
 
-    def test_extract_target_invalid_method(self):
+    def test_extract_target_invalid(self):
         res = Logic.extract_target_index(self.df, "invalid_method")
         assert res == None
+
+    def test_get_record_body(self):
+        expect = {
+            "date": "2022-01-01",
+            "name": "Prof. Emmanuelle",
+            "id": "c04d7a84687e4",
+            "age": "45",
+            "number": "60.0"
+        }
+        res = Logic.get_record_body(self.df, 0)
+        assert expect == res
