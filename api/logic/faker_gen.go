@@ -25,18 +25,9 @@ type FakeFields struct {
 }
 
 func GenerateData(from string, to string) ([]model.PutCSV, error) {
-	fromDate, err := time.Parse(LAYOUT, from)
+	fromDate, diffDays, err := getDiffDays(from, to)
 	if err != nil {
-		return nil, err
-	}
-	toDate, err := time.Parse(LAYOUT, to)
-	if err != nil {
-		return nil, err
-	}
-
-	diffDays := int(toDate.Sub(fromDate).Hours() / 24)
-	if diffDays > 1000 {
-		return nil, fmt.Errorf("too long duration")
+		return nil, fmt.Errorf("\nFailed to get DiffDays: %w", err)
 	}
 	out := make([]model.PutCSV, diffDays+1)
 	for i := range out {
@@ -65,4 +56,24 @@ func ToBody(input []model.PutCSV) (io.Reader, error) {
 	}
 	w.Flush()
 	return &buf, nil
+}
+
+func getDiffDays(from string, to string) (time.Time, int, error) {
+	fromDate, err := time.Parse(LAYOUT, from)
+	if err != nil {
+		return time.Time{}, 0, err
+	}
+	toDate, err := time.Parse(LAYOUT, to)
+	if err != nil {
+		return time.Time{}, 0, err
+	}
+	if fromDate.After(toDate) {
+		return time.Time{}, 0, fmt.Errorf("fromDate must be on or before the toDate")
+	}
+
+	diffDays := int(toDate.Sub(fromDate).Hours() / 24)
+	if diffDays > 1000 {
+		return time.Time{}, 0, fmt.Errorf("too long duration")
+	}
+	return fromDate, diffDays, nil
 }

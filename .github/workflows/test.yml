@@ -1,4 +1,4 @@
-name: test Lambda Function
+name: Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - 'feature/**'
 
 jobs:
-  test:
+  test_lambda:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,3 +34,18 @@ jobs:
 
       - name: Run test
         run: pytest
+
+  test_api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.19'
+
+      - name: Run test
+        run: cd ./api && go test -v ./...
