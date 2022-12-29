@@ -11,20 +11,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type RouterA struct {
+type Router struct {
 	S3Repository   adaptor.S3Repository
 	LambdaOperator adaptor.LambdaOperator
 }
 
-func InitRouterA(e *gin.Engine, s3repo adaptor.S3Repository, lambaOp adaptor.LambdaOperator) {
-	router := &RouterA{
+func InitRouter(e *gin.Engine, s3repo adaptor.S3Repository, lambaOp adaptor.LambdaOperator) {
+	router := &Router{
 		S3Repository:   s3repo,
 		LambdaOperator: lambaOp,
 	}
 	e.GET("/invoke_lambda", router.Invoke)
+	e.GET("/health_check", router.HealthCheck)
 }
 
-func (r *RouterA) Invoke(c *gin.Context) {
+func (r *Router) Invoke(c *gin.Context) {
 	from := c.Request.URL.Query().Get("from_date")
 	to := c.Request.URL.Query().Get("to_date")
 	method := c.Request.URL.Query().Get("method")
@@ -54,4 +55,8 @@ func (r *RouterA) Invoke(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"msg": "accepted", "lambda_response": string(resp.Payload)})
+}
+
+func (r *Router) HealthCheck(c *gin.Context) {
+	c.JSON(http.StatusOK, "PogU")
 }
