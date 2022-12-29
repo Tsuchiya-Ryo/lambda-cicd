@@ -20,7 +20,7 @@ func main() {
 	e := gin.New()
 	s3repo := adaptor.NewS3Repository()
 	lambdaOp := adaptor.NewLambdaOperator()
-	router.InitRouterA(e, *s3repo, *lambdaOp)
+	router.InitRouter(e, *s3repo, *lambdaOp)
 
 	e.Run(":8088")
 }

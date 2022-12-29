@@ -42,6 +42,7 @@ func TestGenerateDataValids(t *testing.T) {
 		t.Run(tc.Name, func(t *testing.T) {
 			faker.SetRandomSource(rand.NewSource(42))
 			got, err := logic.GenerateData(tc.ArgCase.From, tc.ArgCase.To)
+			// seed固定しても数字以外のフィールドが若干変化してしまうので見ていない
 			for i := 0; i < len(got); i++ {
 				assert.Equal(t, got[i].Date, tc.Want[i].Date)
 				assert.Equal(t, got[i].Age, tc.Want[i].Age)
