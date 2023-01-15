@@ -11,9 +11,11 @@ FROM alpine:latest
 ARG ENV
 ENV ENV=$ENV
 
+EXPOSE 80
+
 COPY ./env /api/env
 WORKDIR /api
 
 COPY --from=builder /api/engine .
 
-CMD ["./engine"]
+ENTRYPOINT ["./engine"]
