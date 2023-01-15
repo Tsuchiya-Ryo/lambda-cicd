@@ -29,9 +29,14 @@ resource "aws_iam_role_policy" "lambda" {
             "s3:GetObject"
           ],
           "Effect" : "Allow",
-          "Resource" : "${var.s3_bucket_arn}"
+          "Resource" : "${var.s3_bucket_arn}/*"
         }
       ]
     }
   )
+}
+
+resource "aws_iam_role_policy_attachment" "lambda" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }

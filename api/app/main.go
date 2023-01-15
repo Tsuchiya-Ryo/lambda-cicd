@@ -22,7 +22,7 @@ func main() {
 	lambdaOp := adaptor.NewLambdaOperator()
 	router.InitRouter(e, *s3repo, *lambdaOp)
 
-	e.Run(":8088")
+	e.Run(":80")
 }
 
 func load_config() error {
